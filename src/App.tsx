@@ -1,57 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import cityApi from 'apis/cityApi';
+import studentApi from 'apis/studentApi';
+import { PrivateRoute } from 'components/common';
+import { AdminLayout, CartLayout } from 'components/layout';
+import LoginPage from 'features/auth/pages/LoginPage';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
+  useEffect(() => {
+    cityApi
+      .getAll({
+        _page: 1,
+        _limit: 10,
+      })
+      .then((response) => console.log(response));
+    studentApi
+      .getAll({
+        _page: 1,
+        _limit: 10,
+        _sort: 'age',
+        _order: 'desc',
+      })
+      .then((response) => console.log(response));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />}>
+        {/* LOGIN PAGE */}
+      </Route>
+
+      <Route path="/" element={<AdminLayout />} />
+
+      <Route path="/cart" element={<PrivateRoute />}>
+        <Route path="/cart" element={<CartLayout />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
