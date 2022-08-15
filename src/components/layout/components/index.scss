@@ -1,4 +1,8 @@
 @import '../../../styles/themes.module.scss';
+$font-header-first: 12px;
+$font-header-second: 16px;
+$font-icon-search: 25px;
+$yellow: #fa9e1b;
 
 .Header {
   /* The image used */
@@ -12,13 +16,21 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  color: #fff;
+  transition: all 0.5s;
 
   a {
     text-decoration: none;
     padding: 0 10px;
+    color: #fff;
+    svg {
+      &:hover {
+        color: $yellow;
+      }
+    }
   }
   .header-first {
-    font-size: 12px;
+    font-size: $font-header-first;
     color: #fff;
     padding: 8px 0px;
     span {
@@ -30,10 +42,57 @@
     }
     a {
       color: #fff;
+      &:hover {
+        color: $yellow;
+      }
     }
   }
 
   .Header-container {
     background-color: $main;
+  }
+
+  .header__nav {
+    background: rgba(54, 19, 84, 0.6);
+    z-index: 2;
+
+    .header__nav__logo {
+      a {
+        display: flex;
+        align-items: center;
+        span {
+          padding-left: 20px;
+          text-transform: uppercase;
+          font-size: 30px;
+          font-weight: 1000;
+          letter-spacing: 2px;
+        }
+      }
+    }
+    .header__nav__box {
+      a {
+        margin-right: 20px;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: $font-header-second;
+        &:hover {
+          &::after {
+            background: linear-gradient(to right, #fa9e1b, #8d4fff);
+            transition: all 0.8s;
+          }
+        }
+      }
+    }
+    .header__nav__search {
+      transform: rotate(90deg);
+      cursor: pointer;
+      svg {
+        font-size: $font-icon-search;
+        font-weight: bold;
+        &:hover {
+          color: #fa9e1b;
+        }
+      }
+    }
   }
 }
