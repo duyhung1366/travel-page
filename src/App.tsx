@@ -7,23 +7,6 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
-  useEffect(() => {
-    cityApi
-      .getAll({
-        _page: 1,
-        _limit: 10,
-      })
-      .then((response) => console.log(response));
-    studentApi
-      .getAll({
-        _page: 1,
-        _limit: 10,
-        _sort: 'age',
-        _order: 'desc',
-      })
-      .then((response) => console.log(response));
-  }, []);
-
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />}>
